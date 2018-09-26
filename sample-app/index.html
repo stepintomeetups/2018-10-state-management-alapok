@@ -1,9 +1,38 @@
 <html>
   <head>
     <title>State Management Basics</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h1>Hello</h1>
+
+    <div class="main-container">
+        <h1>Tic Tac Redux</h1>
+        <table class="tic-tac-grid">
+          <tr class="tic-tac-grid-row">
+            <td class="tic-tac-grid-cell"></td>
+            <td class="tic-tac-grid-cell"></td>
+            <td class="tic-tac-grid-cell"></td>
+          </tr>
+
+          <tr class="tic-tac-grid-row">
+              <td class="tic-tac-grid-cell tic-tac-o"></td>
+              <td class="tic-tac-grid-cell tic-tac-x"></td>
+              <td class="tic-tac-grid-cell"></td>
+              </tr>
+
+            <tr class="tic-tac-grid-row">
+                <td class="tic-tac-grid-cell"></td>
+                <td class="tic-tac-grid-cell"></td>
+                <td class="tic-tac-grid-cell"></td>
+            </tr>
+          </table>
+          <div class="button-bar">
+            <button class="game-button new-game-button">New Game</button>
+            <button class="game-button reset-button">Reset</button>
+          </div>
+    </div>
+
     <script src="dist/bundle.js"></script>
   </body>
 </html>
