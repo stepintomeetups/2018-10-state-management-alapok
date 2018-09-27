@@ -28,7 +28,7 @@ export function makeMove(row, column, player) {
 }
 export function changeTurns(currentPlayer) {
   return {
-    type: changeTurns,
+    type: CHANGE_TURNS,
     payload: { currentPlayer }
   };
 }

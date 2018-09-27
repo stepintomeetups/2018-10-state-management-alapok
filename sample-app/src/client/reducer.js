@@ -27,7 +27,7 @@ export function reducer (state=initialState, action) {
   case MAKE_MOVE:
     return makeMoveHandler(state, action.payload);
   case CHANGE_TURNS:
-    return changeTurnsHandler(state);
+    return changeTurnsHandler(state, action.payload);
   case GAME_OVER:
     return gameOverHandler(state, action.payload);
   default: 
@@ -35,8 +35,18 @@ export function reducer (state=initialState, action) {
   }
 }
 
-const resetGameHandler = () => {
-  return Object.assign({}, initialState);
+const resetGameHandler = (state) => {
+  return Object.assign({}, state, {
+    grid: [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', '']
+    ],
+    currentPlayer: 'x',
+    xWinCount: 0,
+    oWinCount: 0,
+    currentWinner: ''
+  });
 };
 
 const newGameHandler = (state) => {
@@ -58,8 +68,8 @@ const makeMoveHandler = (state, payload) => {
   return Object.assign({}, state, { grid });
 };
 
-const changeTurnsHandler = (state) => {
-  let nextPlayer = state.currentPlayer === 'x' ? 'o' : 'x';
+const changeTurnsHandler = (state, payload) => {
+  let nextPlayer = payload.currentPlayer === 'x' ? 'o' : 'x';
   return Object.assign({}, state, { currentPlayer: nextPlayer });
 };
 
