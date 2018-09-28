@@ -3,8 +3,7 @@ import {
   newGame,
   makeMove,
   changeTurns,
-  gameOver
-
+  gameOver,
 } from './actions';
 
 export class Game {
@@ -13,60 +12,68 @@ export class Game {
     this.store = config.store;
 
     this.store.subscribe(this.update.bind(this));
+
     this.ui
       .querySelector('.reset-button')
       .addEventListener('click', () => {
-        this.resetGame();
+        this.store.dispatch(resetGame());
       });
-
     this.ui
       .querySelector('.new-game-button')
       .addEventListener('click', () => {
-        this.newGame();
+        this.store.dispatch(newGame());
       });
 
     const cells = this.ui.querySelectorAll('.tic-tac-grid-cell');
-    console.log(cells);
     cells.forEach((cell, index) => {
       const row = Math.floor(index / 3);
       const column = index % 3;
       cell.addEventListener('click', () => {
-        console.log('cell clicked');
         this.makeMove(row, column);
       });
     });
   }
 
-  resetGame() {
-    this.store.dispatch(resetGame());
-  }
-
-  newGame() {
-    console.log('new game call');
-    this.store.dispatch(newGame());
-  }
-
   makeMove(row, column) {
-    console.log('make move call');
-    const player = this.store.getState().currentPlayer;
-    this.store.dispatch(makeMove(row, column, player));
-    this.checkGrid();
+    if (!this.store.getState().currentWinner) {
+      const player = this.store.getState().currentPlayer;
+      const grid = this.store.getState().grid;
+      if (!grid[row][column]) {
+        this.store.dispatch(makeMove(row, column, player));
+        this.checkGrid();
+      }
+    }
   }
 
   checkGrid() {
     const grid = this.store.getState().grid;
     const player = this.store.getState().currentPlayer;
     if (this.checkRows(grid, player) || this.checkColumns(grid, player) || this.checkDiagonals(grid, player)) {
-      this.gameOver();
+      const winner = this.store.getState().currentPlayer;
+      this.store.dispatch(gameOver(winner));
+    } else if (this.isTie(grid)) {
+      this.store.dispatch(gameOver());
     } else {
       this.store.dispatch(changeTurns(player));
     }
   }
 
+  //TODO refactor this
+  isTie(grid) {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (!grid[i][j]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   checkRows(grid, player) {
 
     for (let i = 0; i < grid.length; i++) {
-      if (grid[i].every((cell) => cell === player)) {
+      if (grid[i].every(cell => cell === player)) {
         return true;
       }
     }
@@ -75,7 +82,7 @@ export class Game {
 
   checkColumns(grid, player) {
     for(let i = 0; i < grid.length; i++) {
-      if (grid.map((row) => row[i]).every((cell) => cell === player)) {
+      if (grid.map(row => row[i]).every(cell => cell === player)) {
         return true;
       } 
     }
@@ -93,7 +100,6 @@ export class Game {
   }
 
   renderGrid() {
-    console.log('rendering grid');
     const grid = this.store.getState().grid;
     let cells = this.ui.querySelectorAll('.tic-tac-grid-cell');
     cells.forEach((cell, index) => {
@@ -105,16 +111,21 @@ export class Game {
     });
   }
 
-  setPoints() {
+  setWinCounts() {
+    const xWinCount = this.store.getState().xWinCount;
+    const oWinCount = this.store.getState().oWinCount;
+    this.ui.querySelector('.x-win-count').innerText = `X's wins: ${xWinCount}`;
+    this.ui.querySelector('.o-win-count').innerText = `O's wins: ${oWinCount}`;
+  }
 
+  setTurnText() {
+    const text = this.store.getState().text;
+    this.ui.querySelector('.current-turn').innerText = text;
   }
 
   update() {
     this.renderGrid();
-    this.setPoints();
-  }
-
-  gameOver() {
-    
+    this.setWinCounts();
+    this.setTurnText();
   }
 }

@@ -68,3 +68,15 @@ h1 {
   margin: auto;
   width: 40px;
 }
+
+.status-bar {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px 0;
+  width: 100%;
+}
+
+.status-bar-item {
+  color: #608D8F;
+  font-size: 18px;
+}

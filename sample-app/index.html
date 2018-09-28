@@ -5,34 +5,38 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-
     <div id="tic-tac" class="main-container">
-        <h1>Tic Tac Redux</h1>
-        <table class="tic-tac-grid">
-          <tr class="tic-tac-grid-row">
-            <td class="tic-tac-grid-cell"></td>
-            <td class="tic-tac-grid-cell"></td>
-            <td class="tic-tac-grid-cell"></td>
-          </tr>
+      <h1>Tic Tac Redux</h1>
+      <div class="status-bar">
+        <div class="status-bar-item x-win-count"></div>
+        <div class="status-bar-item current-turn"></div>
+        <div class="status-bar-item o-win-count"></div>
+      </div>
+      <table class="tic-tac-grid">
+        <tr class="tic-tac-grid-row">
+          <td class="tic-tac-grid-cell"></td>
+          <td class="tic-tac-grid-cell"></td>
+          <td class="tic-tac-grid-cell"></td>
+        </tr>
 
-          <tr class="tic-tac-grid-row">
-              <td class="tic-tac-grid-cell"></td>
-              <td class="tic-tac-grid-cell"></td>
-              <td class="tic-tac-grid-cell"></td>
-              </tr>
+        <tr class="tic-tac-grid-row">
+          <td class="tic-tac-grid-cell"></td>
+          <td class="tic-tac-grid-cell"></td>
+          <td class="tic-tac-grid-cell"></td>
+        </tr>
 
-            <tr class="tic-tac-grid-row">
-                <td class="tic-tac-grid-cell"></td>
-                <td class="tic-tac-grid-cell"></td>
-                <td class="tic-tac-grid-cell"></td>
-            </tr>
-          </table>
-          <div class="button-bar">
-            <button class="game-button new-game-button">New Game</button>
-            <button class="game-button reset-button">Reset</button>
-          </div>
+        <tr class="tic-tac-grid-row">
+          <td class="tic-tac-grid-cell"></td>
+          <td class="tic-tac-grid-cell"></td>
+          <td class="tic-tac-grid-cell"></td>
+        </tr>
+      </table>
+      <div class="button-bar">
+        <button class="game-button new-game-button">New Game</button>
+        <button class="game-button reset-button">Reset</button>
+      </div>
     </div>
-
+    
     <script src="dist/bundle.js"></script>
   </body>
 </html>

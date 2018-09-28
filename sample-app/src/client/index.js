@@ -9,8 +9,6 @@ const store = createStore(
 
 document.addEventListener('DOMContentLoaded', () => {
   const ui = document.querySelector('#tic-tac');
-  console.log('Store: ', store);
-  console.log('UI: ', ui);
   const game = new Game({ui, store});
   game.resetGame();
 });

@@ -3,7 +3,7 @@ import {
   GAME_OVER,
   NEW_GAME,
   RESET_GAME,
-  CHANGE_TURNS
+  CHANGE_TURNS,
 } from './actions';
 
 export const initialState = {
@@ -15,7 +15,8 @@ export const initialState = {
   currentPlayer: 'x',
   xWinCount: 0,
   oWinCount: 0,
-  currentWinner: ''
+  currentWinner: '',
+  text: 'X\'s turn'
 };
 
 export function reducer (state=initialState, action) {
@@ -23,7 +24,7 @@ export function reducer (state=initialState, action) {
   case NEW_GAME:
     return newGameHandler(state);
   case RESET_GAME:
-    return resetGameHandler();
+    return resetGameHandler(state);
   case MAKE_MOVE:
     return makeMoveHandler(state, action.payload);
   case CHANGE_TURNS:
@@ -45,19 +46,25 @@ const resetGameHandler = (state) => {
     currentPlayer: 'x',
     xWinCount: 0,
     oWinCount: 0,
-    currentWinner: ''
+    currentWinner: '',
+    text: 'X\'s turn'
   });
 };
 
 const newGameHandler = (state) => {
   let oldState = Object.assign({}, state);
-  return Object.assign(
-    {},
-    initialState,
-    {
-      xWinCount: oldState.xWinCount,
-      oWinCount: oldState.oWinCount
-    }
+  return Object.assign({}, state, {
+    grid: [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', '']
+    ],
+    currentPlayer: 'x',
+    xWinCount: oldState.xWinCount,
+    oWinCount: oldState.oWinCount,
+    currentWinner: '',
+    text: 'X\'s turn'
+  }
   );
 };
 
@@ -70,16 +77,24 @@ const makeMoveHandler = (state, payload) => {
 
 const changeTurnsHandler = (state, payload) => {
   let nextPlayer = payload.currentPlayer === 'x' ? 'o' : 'x';
-  return Object.assign({}, state, { currentPlayer: nextPlayer });
+  return Object.assign({}, state, { currentPlayer: nextPlayer, text: `${ nextPlayer.toUpperCase() }'s turn` });
 };
 
 const gameOverHandler = (state, payload) => {
   let oldState = Object.assign({}, state);
-  let xWinCount = payload.winner === 'x' ? oldState.xWinCount++ : oldState.xWinCount;
-  let oWinCount = payload.winner === 'o' ? oldState.oWinCount++ : oldState.oWinCount;
+  let xWinCount = oldState.xWinCount;
+  let oWinCount = oldState.oWinCount;
+  let text = 'Tie!';
+
+  if (payload.winner) {
+    payload.winner === 'x' ? ++xWinCount : ++oWinCount;
+    text = `${ payload.winner.toUpperCase() } won!`;
+  }
+  
   return Object.assign({}, state, {
     currentWinner: payload.winner,
     xWinCount,
-    oWinCount
+    oWinCount,
+    text
   });
 };
