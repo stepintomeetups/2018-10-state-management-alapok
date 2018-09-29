@@ -10,5 +10,5 @@ const store = createStore(
 document.addEventListener('DOMContentLoaded', () => {
   const ui = document.querySelector('#tic-tac');
   const game = new Game({ui, store});
-  game.resetGame();
+  game.newGame();
 });

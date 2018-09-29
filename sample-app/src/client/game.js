@@ -21,7 +21,7 @@ export class Game {
     this.ui
       .querySelector('.new-game-button')
       .addEventListener('click', () => {
-        this.store.dispatch(newGame());
+        this.newGame();
       });
 
     const cells = this.ui.querySelectorAll('.tic-tac-grid-cell');
@@ -45,6 +45,10 @@ export class Game {
     }
   }
 
+  newGame() {
+    this.store.dispatch(newGame());
+  }
+
   checkGrid() {
     const grid = this.store.getState().grid;
     const player = this.store.getState().currentPlayer;
@@ -60,18 +64,16 @@ export class Game {
 
   //TODO refactor this
   isTie(grid) {
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        if (!grid[i][j]) {
-          return false;
-        }
+    const cells = grid.flat();
+    for(let i = 0; i < cells.length; i++) {
+      if (!cells[i]) {
+        return false;
       }
     }
     return true;
   }
 
   checkRows(grid, player) {
-
     for (let i = 0; i < grid.length; i++) {
       if (grid[i].every(cell => cell === player)) {
         return true;
