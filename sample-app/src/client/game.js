@@ -16,7 +16,7 @@ export class Game {
     this.ui
       .querySelector('.reset-button')
       .addEventListener('click', () => {
-        this.store.dispatch(resetGame());
+        this.resetGame();
       });
     this.ui
       .querySelector('.new-game-button')
@@ -43,6 +43,10 @@ export class Game {
         this.checkGrid();
       }
     }
+  }
+
+  resetGame() {
+    this.store.dispatch(resetGame());
   }
 
   newGame() {
