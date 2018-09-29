@@ -2,6 +2,8 @@ import { createStore } from 'redux';
 import { reducer } from './reducer';
 import { Game } from './game';
 
+
+// Initializing the store with the reducer we created
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

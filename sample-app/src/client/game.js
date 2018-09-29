@@ -39,18 +39,18 @@ export class Game {
       const player = this.store.getState().currentPlayer;
       const grid = this.store.getState().grid;
       if (!grid[row][column]) {
-        this.store.dispatch(makeMove(row, column, player));
+        // Dispatch a MAKE_MOVE action with the current row, column and the player as payload
         this.checkGrid();
       }
     }
   }
 
   resetGame() {
-    this.store.dispatch(resetGame());
+    // Dispatch a RESET_GAME action in this function
   }
 
   newGame() {
-    this.store.dispatch(newGame());
+    // Dispatch a NEW_GAME action in this function
   }
 
   checkGrid() {
@@ -58,11 +58,11 @@ export class Game {
     const player = this.store.getState().currentPlayer;
     if (this.checkRows(grid, player) || this.checkColumns(grid, player) || this.checkDiagonals(grid, player)) {
       const winner = this.store.getState().currentPlayer;
-      this.store.dispatch(gameOver(winner));
+      // Dispatch a GAME_OVER action with the winner in the payload
     } else if (this.isTie(grid)) {
-      this.store.dispatch(gameOver());
+      // Dispatch a GAME_OVER action with no payload
     } else {
-      this.store.dispatch(changeTurns(player));
+      // Dispatch an action that will change turns with the current player as payload
     }
   }
 
