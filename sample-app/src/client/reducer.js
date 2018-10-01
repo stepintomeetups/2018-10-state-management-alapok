@@ -37,18 +37,7 @@ export function reducer (state=initialState, action) {
 }
 
 const resetGameHandler = (state) => {
-  return Object.assign({}, state, {
-    grid: [
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', '']
-    ],
-    currentPlayer: 'x',
-    xWinCount: 0,
-    oWinCount: 0,
-    currentWinner: '',
-    text: 'X\'s turn'
-  });
+  return Object.assign({}, state, initialState);
 };
 
 const newGameHandler = (state) => {
@@ -64,8 +53,7 @@ const newGameHandler = (state) => {
     oWinCount: oldState.oWinCount,
     currentWinner: '',
     text: 'X\'s turn'
-  }
-  );
+  });
 };
 
 const makeMoveHandler = (state, payload) => {
